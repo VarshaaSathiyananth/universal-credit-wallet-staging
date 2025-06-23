@@ -10,8 +10,51 @@ app.use(express.json());
 const wallets = {};  // userId: { balance: number, ledger: [] }
 
 app.get("/", (req, res) => {
-  res.send("Wallet Service Running");
+  res.send(`
+    <html>
+      <head>
+        <title>Wallet Service</title>
+        <style>
+          body {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            font-family: Arial, sans-serif;
+            background-color: #f9f9f9;
+            color: #222;
+          }
+          h1 {
+            font-size: 28px;
+            font-weight: bold;
+            margin-bottom: 20px;
+          }
+          pre {
+            background: #eee;
+            padding: 10px;
+            border-radius: 8px;
+            font-size: 14px;
+            max-width: 600px;
+            overflow-x: auto;
+          }
+        </style>
+      </head>
+      <body>
+        <h1>💼 Wallet Service Running</h1>
+        <p>Use the following API endpoints:</p>
+        <pre>
+POST /api/wallet/credit   { userId, event, amount, refId }
+POST /api/wallet/debit    { userId, event, amount, refId }
+GET  /api/wallet/balance  ?userId=...
+GET  /api/wallet/ledger   ?userId=...
+        </pre>
+        <p>Call these using <strong>Postman</strong>, <strong>curl</strong>, or your front-end app.</p>
+      </body>
+    </html>
+  `);
 });
+
 
 app.listen(PORT, () => {
   console.log(`Server running on http://localhost:${PORT}`);
